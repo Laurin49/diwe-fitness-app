@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="common/header :: common-header">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">DIWE Fitness-App</title>
+</head>
+<body>
+    <div th:replace="common/navbar :: nav-front"></div>
+
+    <div class="container-fluid px-2">
+        <th:block layout:fragment="content"/>
+    </div>
+
+     <div th:replace="common/bottom :: bottom-scripts"></div>
+</body>
+</html>
