@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Liste mit Übungen</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <h1>Übungen</h1>
+
+    <a th:href = "@{/exercises/add}" class="btn btn-primary btn-sm mb-3"> Übung hinzufügen </a>
+
+    <div th:if="${!exercises.isEmpty()}">
+        <table border="1" class = "table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="exercise : ${exercises}">
+                <td th:text="${exercise.name}"></td>
+                <td>
+                    <a th:href="@{/exercises/update/{id}(id=${exercise.id})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/exercises/delete/{id}(id=${exercise.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:unless="${!exercises.isEmpty()}">
+        <h4 class="display-4">Es gibt noch keine Einträge ...</h4>
+    </div>
+
+</div>
+</body>
+</html>
