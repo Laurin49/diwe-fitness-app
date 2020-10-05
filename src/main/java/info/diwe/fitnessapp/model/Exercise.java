@@ -1,5 +1,7 @@
 package info.diwe.fitnessapp.model;
 
+import info.diwe.fitnessapp.model.enums.MuscleGroup;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,11 +15,15 @@ public class Exercise {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    private MuscleGroup muscleGroup;
+
     public Exercise() {
     }
 
-    public Exercise(String name) {
+    public Exercise(String name, MuscleGroup muscleGroup) {
         this.name = name;
+        this.muscleGroup = muscleGroup;
     }
 
     public Long getId() {
@@ -34,6 +40,14 @@ public class Exercise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public MuscleGroup getMuscleGroup() {
+        return muscleGroup;
+    }
+
+    public void setMuscleGroup(MuscleGroup muscleGroup) {
+        this.muscleGroup = muscleGroup;
     }
 
     @Override

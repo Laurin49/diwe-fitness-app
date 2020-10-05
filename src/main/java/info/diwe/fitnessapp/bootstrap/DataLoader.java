@@ -1,6 +1,7 @@
 package info.diwe.fitnessapp.bootstrap;
 
 import info.diwe.fitnessapp.model.Exercise;
+import info.diwe.fitnessapp.model.enums.MuscleGroup;
 import info.diwe.fitnessapp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,21 +27,21 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void initExerciseData() {
-        Exercise ex = new Exercise("Bankdrücken");
+        Exercise ex = new Exercise("Bankdrücken", MuscleGroup.Brust);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Schulterdrücken");
+        ex = new Exercise("Schulterdrücken", MuscleGroup.Schultern);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Seitheben");
+        ex = new Exercise("Seitheben", MuscleGroup.Schultern);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Seitheben vorg.");
+        ex = new Exercise("Seitheben vorg.", MuscleGroup.Schultern);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Rudern vorg. SZ-H");
+        ex = new Exercise("Rudern vorg. SZ-H", MuscleGroup.Rücken);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Rudern vorg. 1-Arm");
+        ex = new Exercise("Rudern vorg. 1-Arm", MuscleGroup.Rücken);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Rudern Seilzug");
+        ex = new Exercise("Rudern Seilzug", MuscleGroup.Rücken);
         exerciseService.createExercise(ex);
-        ex = new Exercise("Bizeps-Curl SZ-H");
+        ex = new Exercise("Bizeps-Curl SZ-H", MuscleGroup.Bizeps);
         exerciseService.createExercise(ex);
     }
 }

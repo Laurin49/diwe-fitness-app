@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ExerciseService {
     List<Exercise> readExercises();
-    // List<Exercise> readExercisesByMuscleGroup(String mgroup);
+    List<Exercise> readExercisesByMuscleGroup(String mgroup);
 
     Exercise readExercise(Long id);
     Exercise createExercise(Exercise exercise);

@@ -2,9 +2,11 @@ package info.diwe.fitnessapp.service.impl;
 
 import info.diwe.fitnessapp.exception.ResourceNotFoundException;
 import info.diwe.fitnessapp.model.Exercise;
+import info.diwe.fitnessapp.model.enums.MuscleGroup;
 import info.diwe.fitnessapp.repository.ExerciseRepository;
 import info.diwe.fitnessapp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public List<Exercise> readExercises() {
         return (List<Exercise>) exerciseRepository.findAll();
+    }
+
+    @Override
+    public List<Exercise> readExercisesByMuscleGroup(String mgroup) {
+        return exerciseRepository.findByMuscleGroupOrderByMuscleGroupAsc(MuscleGroup.valueOf(mgroup));
     }
 
     @Override

@@ -7,28 +7,82 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>Übungen</h1>
 
-    <a th:href = "@{/exercises/add}" class="btn btn-primary btn-sm mb-3"> Übung hinzufügen </a>
+    <div class="row justify-content-center pt-1">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="card-title">Exercise List</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form th:object="${filterMuscleGroup}" th:action="@{/exercises/filter}"
+                          method="post">
+                        <div class="form-row pb-2">
+                            <div class="col col-md-3">
+                                <select th:field="*{filtermuscle}" class="form-control">
+                                    <option th:each="muscle: ${muscleGroups}" th:value="${muscle}"
+                                            th:text="${muscle}"></option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary tooltip-test"
+                                        title="Filter">Filter</button>
+                            </div>
+                            <div class="col-md-auto">
+                                <a role="button" class="btn btn-primary mt-1 tooltip-test"
+                                   title="Add Exercise"
+                                   th:href="@{'/exercises/add'}">
+                                    <i class="fa fa-plus"></i> New
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div th:if="${!exercises.isEmpty()}">
-        <table border="1" class = "table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="exercise : ${exercises}">
-                <td th:text="${exercise.name}"></td>
-                <td>
-                    <a th:href="@{/exercises/update/{id}(id=${exercise.id})}" class="btn btn-primary">Update</a>
-                    <a th:href="@{/exercises/delete/{id}(id=${exercise.id})}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row justify-content-center pt-1">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive"
+                         th:if="${not #lists.isEmpty(exercises)}">
+                        <table class="table table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Muskelgruppe</th>
+                                <th style="text-align: center">Update</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="exercise : ${exercises}">
+                                <td th:text="${exercise.name}"></td>
+                                <td th:text="${exercise.muscleGroup}"></td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" title="Edit Exercise"
+                                       th:href="@{/exercises/update/{id}(id=${exercise.id})}">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" data-placement="right" title="Delete Exercise"
+                                       data-toggle="modal"
+                                       data-target="#modal-warning"
+                                       th:attr="data-target='#modal-warning'+${exercise.id}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    <div th:replace="exercises/exercise_delete_modal_dialog :: exercise-delete-modal-dialog"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div th:unless="${!exercises.isEmpty()}">
