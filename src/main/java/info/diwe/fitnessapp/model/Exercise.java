@@ -3,6 +3,8 @@ package info.diwe.fitnessapp.model;
 import info.diwe.fitnessapp.model.enums.MuscleGroup;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +15,8 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Der Name der Übung darf nicht leer bleiben ...")
+    @Size(min = 3, max = 50, message = "Der Name der Übung muss zwischen 3 und 50 Zeichen enthalten ...")
     private String name;
 
     @Enumerated(EnumType.STRING)

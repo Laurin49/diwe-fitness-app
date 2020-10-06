@@ -59,11 +59,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public Exercise findByName(String name) {
+    public Optional<Exercise> findByName(String name) {
         Optional<Exercise> result = exerciseRepository.findByName(name);
-        if (!result.isPresent()) {
-            throw new ResourceNotFoundException("Exercise: " + name + " wurde nicht gefunden ...");
-        }
-        return result.get();
+        return result;
+    }
+
+    @Override
+    public Optional<Exercise> findByNameAndMuscleGroup(String name, MuscleGroup muscleGroup) {
+        Optional<Exercise> result = exerciseRepository.findByNameAndMuscleGroup(name, muscleGroup);
+        return result;
     }
 }

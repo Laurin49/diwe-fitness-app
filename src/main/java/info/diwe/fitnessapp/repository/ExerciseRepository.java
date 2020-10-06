@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findByMuscleGroupOrderByMuscleGroupAsc(MuscleGroup muscleGroup);
     Optional<Exercise> findByName(String name);
+    Optional<Exercise> findByNameAndMuscleGroup(String name, MuscleGroup muscleGroup);
 }
