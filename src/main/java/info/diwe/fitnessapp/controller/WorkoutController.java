@@ -1,6 +1,5 @@
 package info.diwe.fitnessapp.controller;
 
-import info.diwe.fitnessapp.model.Exercise;
 import info.diwe.fitnessapp.model.Workout;
 import info.diwe.fitnessapp.model.dto.WorkoutDTO;
 import info.diwe.fitnessapp.service.WorkoutService;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
