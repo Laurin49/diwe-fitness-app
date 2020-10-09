@@ -2,6 +2,7 @@ package info.diwe.fitnessapp.controller;
 
 import info.diwe.fitnessapp.command.FilterMuscleGroup;
 import info.diwe.fitnessapp.model.Exercise;
+import info.diwe.fitnessapp.model.dto.WorkoutDTO;
 import info.diwe.fitnessapp.model.enums.MuscleGroup;
 import info.diwe.fitnessapp.service.ExerciseService;
 import org.springframework.stereotype.Controller;
@@ -99,33 +100,20 @@ public class ExerciseController {
     public ModelAndView addExercisePost(@ModelAttribute @Valid Exercise exercise, BindingResult bindingResult,
              ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
-            modelAndView = showAddFailure(exercise, "Fehler beim Speichern der Übung ...", modelAndView);
+            modelAndView = showMsg("add", exercise, "Fehler beim Speichern der Übung ...",
+                    false, modelAndView);
             return modelAndView;
         }
         if (exerciseService.findByName(exercise.getName()).isPresent()) {
-            modelAndView = showAddFailure(exercise, "Der Name der Übung ist schon vergeben ...", modelAndView);
+            modelAndView = showMsg("add", exercise, "Der Name der Übung ist schon vergeben ...",
+                    false, modelAndView);
             return modelAndView;
         }
+
         exerciseService.createExercise(exercise);
 
-        modelAndView.addObject("message", "Übung hinzugefügt");
-        modelAndView.addObject("alertClass", "alert-success");
-
-        modelAndView.addObject("muscleGroups", muscleGroups);
-
-        modelAndView.addObject("exercise", exercise);
-        modelAndView.setViewName("exercises/add");
-        return modelAndView;
-    }
-
-    private ModelAndView showAddFailure(Exercise exercise, String msg, ModelAndView modelAndView) {
-        modelAndView.addObject("message", msg);
-        modelAndView.addObject("alertClass", "alert-danger");
-        modelAndView.addObject("exercise", exercise);
-        modelAndView.addObject("filterMuscleGroup", filterMuscleGroup);
-        modelAndView.addObject("muscleGroups", muscleGroups);
-
-        modelAndView.setViewName("exercises/add");
+        modelAndView = showMsg("add", exercise, "Übung hinzugefügt ...",
+                true, modelAndView);
         return modelAndView;
     }
 
@@ -152,7 +140,7 @@ public class ExerciseController {
         String msg = "";
         if (bindingResult.hasErrors()) {
             msg = "Übungen - Fehler beim speichern ...";
-            showUpdateFailure(exercise, msg, modelAndView);
+            modelAndView = showMsg("update", exercise, msg, false, modelAndView);
             return modelAndView;
         }
 
@@ -160,40 +148,39 @@ public class ExerciseController {
         if (updatedExercise.getName().equals(exercise.getName())) {
             if (updatedExercise.getMuscleGroup().name().equals(exercise.getMuscleGroup().name())) {
                 msg = "Keine Änderungen, Update nicht nötig ...";
-                showUpdateFailure(exercise, msg, modelAndView);
+                modelAndView = showMsg("update", exercise, msg, false, modelAndView);
                 return modelAndView;
             }
         }
         // Name der Übung schon vorhanden
-        if (exerciseService.findByNameAndMuscleGroup(exercise.getName(), exercise.getMuscleGroup()).isPresent()) {
-            msg = "Der Name der Übung ist bereits vorhanden, bitte wählen Sie einen anderen Namen ...";
-            showUpdateFailure(exercise, msg, modelAndView);
-            return modelAndView;
+        if (exerciseService.findByName(exercise.getName()).isPresent()) {
+            if (!updatedExercise.getName().equals(exercise.getName())) {
+                msg = "Der Name der Übung ist bereits vorhanden, bitte wählen Sie einen anderen Namen ...";
+                modelAndView = showMsg("update", exercise, msg, false, modelAndView);
+                return modelAndView;
+            }
         }
 
         exerciseService.updateExercise(exercise);
 
-        modelAndView.addObject("message", "Übung geändert");
-        modelAndView.addObject("alertClass", "alert-success");
-        modelAndView.addObject("muscleGroups", muscleGroups);
-
-        modelAndView.addObject("filterMuscleGroup", filterMuscleGroup);
-        modelAndView.addObject("muscleGroups", muscleGroups);
-
-
-        modelAndView.addObject("exercise", exercise);
-        modelAndView.setViewName("exercises/update");
+        modelAndView = showMsg("update", exercise, "Übung geändert", true, modelAndView);
         return modelAndView;
     }
 
-    private ModelAndView showUpdateFailure(Exercise exercise, String msg, ModelAndView modelAndView) {
+    private ModelAndView showMsg(String type, Exercise exercise, String msg, boolean is_success,
+                                 ModelAndView modelAndView) {
         modelAndView.addObject("message", msg);
-        modelAndView.addObject("alertClass", "alert-danger");
+
+        if (is_success) {
+            modelAndView.addObject("alertClass", "alert-success");
+        } else {
+            modelAndView.addObject("alertClass", "alert-danger");
+        }
         modelAndView.addObject("exercise", exercise);
         modelAndView.addObject("filterMuscleGroup", filterMuscleGroup);
         modelAndView.addObject("muscleGroups", muscleGroups);
 
-        modelAndView.setViewName("exercises/update");
+        modelAndView.setViewName("exercises/" + type);
         return modelAndView;
     }
 
@@ -213,7 +200,6 @@ public class ExerciseController {
         modelAndView.setViewName("exercises/list");
         return modelAndView;
     }
-
 
     private List<Exercise> holeExercises(String muskelGruppe) {
         if (muskelGruppe.equals("Alle")) {

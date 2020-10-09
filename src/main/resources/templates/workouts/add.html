@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>DIWE-FITNESS-APP</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+
+    <div class="row justify-content-center pt-1">
+        <div class="col-md-10">
+            <form th:object="${workout}" th:action="@{/workouts/add}"
+                  method="post">
+                <input type="hidden" th:field="*{id}" />
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Workout Add</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row form-group">
+                            <div class="col col-md-6">
+                                <label>Workout-Name:</label>
+                                <input type="text"
+                                       class="form-control" th:field="*{name}" />
+                                <span style="color: red; font-size: bold"
+                                      th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                              Workout-Name Error
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-6">
+                                <label>Workout-Datum:</label>
+                                <input type="date" class="form-control" th:field="*{datum}" />
+                                <span style="color: red; font-size: bold"
+                                    th:if="${#fields.hasErrors('datum')}" th:errors="*{datum}">
+										Workout Datum Error </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary pr-2 tooltip-test"
+                           title="Zurück" th:href="@{'/workouts/list'}"> Zurück </a>
+                        <button type="submit" class="btn btn-primary pr-2 tooltip-test"
+                                title="Senden">Speichern</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
