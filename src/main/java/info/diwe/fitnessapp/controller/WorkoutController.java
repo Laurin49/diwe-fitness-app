@@ -13,11 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
-@RequestMapping("/workouts")
+@RequestMapping(value = "/workouts")
 public class WorkoutController {
 
     private WorkoutService workoutService;
@@ -26,9 +26,11 @@ public class WorkoutController {
         this.workoutService = workoutService;
     }
 
+    private List<Workout> workouts = new ArrayList<>();
+
     @GetMapping("/list")
     public ModelAndView showWorkouts(ModelAndView modelAndView) {
-        List<Workout> workouts = workoutService.readWorkouts();
+        workouts = workoutService.readWorkouts();
 
         modelAndView.addObject("workouts", workouts);
         modelAndView.setViewName("/workouts/list");
