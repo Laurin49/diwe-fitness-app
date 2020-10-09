@@ -2,7 +2,6 @@ package info.diwe.fitnessapp.controller;
 
 import info.diwe.fitnessapp.command.FilterMuscleGroup;
 import info.diwe.fitnessapp.model.Exercise;
-import info.diwe.fitnessapp.model.dto.WorkoutDTO;
 import info.diwe.fitnessapp.model.enums.MuscleGroup;
 import info.diwe.fitnessapp.service.ExerciseService;
 import org.springframework.stereotype.Controller;

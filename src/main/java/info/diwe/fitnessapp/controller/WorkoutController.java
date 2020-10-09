@@ -33,11 +33,11 @@ public class WorkoutController {
     }
 
     @GetMapping("/list")
-    public ModelAndView getWorkouts(ModelAndView modelAndView) {
-//        workouts = workoutService.readWorkouts();
-//
-//        modelAndView.addObject("workouts", workouts);
-        modelAndView.setViewName("/workouts/list");
+    public ModelAndView getWorkoutList(ModelAndView modelAndView) {
+        workouts = workoutService.readWorkouts();
+
+        modelAndView.addObject("workouts", workouts);
+        modelAndView.setViewName("workouts/list");
         return modelAndView;
     }
 
@@ -50,7 +50,7 @@ public class WorkoutController {
         workoutDTO.setDatum(DateUtil.getLocalDateAsString());
 
         modelAndView.addObject("workout", workoutDTO);
-        modelAndView.setViewName("/workouts/add");
+        modelAndView.setViewName("workouts/add");
         return modelAndView;
     }
 
@@ -84,7 +84,7 @@ public class WorkoutController {
         WorkoutDTO workoutDTO = new WorkoutDTO(workout.getId(), workout.getName(), workout.getDatum().toString());
 
         modelAndView.addObject("workout", workoutDTO);
-        modelAndView.setViewName("/workouts/update");
+        modelAndView.setViewName("workouts/update");
         return modelAndView;
     }
 
@@ -130,7 +130,7 @@ public class WorkoutController {
     public ModelAndView deleteWorkout(@PathVariable("id") Long id, ModelAndView modelAndView) {
         workoutService.deleteWorkout(id);
 
-        getWorkouts(modelAndView);
+        getWorkoutList(modelAndView);
         return modelAndView;
     }
 }
