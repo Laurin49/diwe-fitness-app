@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,11 +27,16 @@ public class WorkoutController {
 
     private List<Workout> workouts = new ArrayList<>();
 
-    @GetMapping("/list")
-    public ModelAndView showWorkouts(ModelAndView modelAndView) {
-        workouts = workoutService.readWorkouts();
+    @PostConstruct
+    public void init() {
 
-        modelAndView.addObject("workouts", workouts);
+    }
+
+    @GetMapping("/list")
+    public ModelAndView getWorkouts(ModelAndView modelAndView) {
+//        workouts = workoutService.readWorkouts();
+//
+//        modelAndView.addObject("workouts", workouts);
         modelAndView.setViewName("/workouts/list");
         return modelAndView;
     }
@@ -124,7 +130,7 @@ public class WorkoutController {
     public ModelAndView deleteWorkout(@PathVariable("id") Long id, ModelAndView modelAndView) {
         workoutService.deleteWorkout(id);
 
-        showWorkouts(modelAndView);
+        getWorkouts(modelAndView);
         return modelAndView;
     }
 }
