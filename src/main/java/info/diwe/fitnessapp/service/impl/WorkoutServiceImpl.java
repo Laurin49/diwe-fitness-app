@@ -4,8 +4,10 @@ import info.diwe.fitnessapp.exception.ResourceNotFoundException;
 import info.diwe.fitnessapp.model.Workout;
 import info.diwe.fitnessapp.repository.WorkoutRepository;
 import info.diwe.fitnessapp.service.WorkoutService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public List<Workout> readWorkouts() {
-        return workoutRepository.findAll();
+        return workoutRepository.findAll(new Sort(Sort.Direction.DESC, "datum"));
     }
 
     @Override
@@ -55,5 +57,17 @@ public class WorkoutServiceImpl implements WorkoutService {
             throw new ResourceNotFoundException("Workout not found ...");
         }
         workoutRepository.delete(result.get());
+    }
+
+    @Override
+    public Optional<Workout> findByNameAndDatum(String name, LocalDate datum) {
+        Optional<Workout> result = workoutRepository.findByNameAndAndDatum(name, datum);
+        return result;
+    }
+
+    @Override
+    public Optional<Workout> findFirstByDatum(LocalDate datum) {
+        Optional<Workout> result = workoutRepository.findFirstByDatum(datum);
+        return result;
     }
 }

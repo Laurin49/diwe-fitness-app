@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Practice hinzufügen</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+    <div class="row justify-content-center pt-1">
+        <div class="col-md-10">
+            <form th:object="${practice}" th:action="@{/practices/update}"
+                  method="post">
+                <input type="hidden" th:field="*{id}" />
+                <div class="form-group">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div class="card-title">Practice Update</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col col-md-6 form-group">
+                                    <select th:field="*{exercise.name}" class="form-control">
+                                        <option th:each="names: ${exerciseNames}" th:value="${names}"
+                                                th:text="${names}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-4 form-group">
+                                    <label>Saetze:</label>
+                                    <input type="number" step="1" min="1" max="50"
+                                           class="form-control" th:field="*{count}" />
+                                    <span	style="color: red; font-weight: bold"
+                                             th:if="${#fields.hasErrors('count')}" th:errors="*{count}">Saetze Error
+                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary pr-2 tooltip-test" title="Zurück"
+                               th:href="@{/practices/selectByWorkout/{id}(id=${currWorkout.id})}">
+<!--                               th:href="@{'/practices/list'}">-->
+                                Zurück
+                            </a>
+                            <button type="submit"
+                                    class="btn btn-primary pr-2 tooltip-test" title="Senden">Speichern</button>
+                        </div>
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- form-group -->
+            </form>
+            <!-- form -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

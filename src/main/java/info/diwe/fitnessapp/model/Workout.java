@@ -1,5 +1,6 @@
 package info.diwe.fitnessapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -7,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +27,10 @@ public class Workout {
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate datum;
+
+    @OneToMany(mappedBy = "workout", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Practice> practiceList = new ArrayList<>();
 
     public Workout() {}
 
@@ -57,6 +64,14 @@ public class Workout {
 
     public void setDatum(LocalDate datum) {
         this.datum = datum;
+    }
+
+    public List<Practice> getPracticeList() {
+        return practiceList;
+    }
+
+    public void setPracticeList(List<Practice> practiceList) {
+        this.practiceList = practiceList;
     }
 
     @Override

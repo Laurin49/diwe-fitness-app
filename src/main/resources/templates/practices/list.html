@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Liste mit Practices</title>
+</head>
+<body>
+
+<div layout:fragment="content" th:remove="tag">
+    <div class="row justify-content-center pt-1">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Workout-Liste
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive"
+                         th:if="${not #lists.isEmpty(workouts)}">
+                        <table class="table table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Datum</th>
+                                <th style="text-align: center">Check</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="workout : ${workouts}">
+                                <td th:text="${workout.name}"></td>
+                                <td th:text="${#temporals.format(workout.datum, 'dd.MM.yyyy')}"></td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" title="Select Workout"
+                                       th:href="@{/practices/selectByWorkout/{id}(id=${workout.id})}">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <div th:if="${isAddPractice}" th:text="'Practices of ' +
+                            ${currWorkout.name} + ': ' +  ${#temporals.format(currWorkout.datum, 'dd.MM.yyyy')}">
+                    </div>
+                    <div th:unless="${isAddPractice}" th:text="'Practices'">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col">
+                        </div>
+                        <div class="col-md-auto" th:if="${isAddPractice}">
+                            <a role="button" class="btn btn-primary mt-1 tooltip-test"
+                               title="Add Practice" th:href="@{'/practices/add'}"> <i
+                                    class="fa fa-plus"></i> New
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive"
+                         th:if="${not #lists.isEmpty(practices)}">
+                        <table class="table table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Übung</th>
+                                <th>Sätze</th>
+                                <th style="text-align: center">Update</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="practice : ${practices}">
+                                <td th:text="${practice.exercise.name}"></td>
+                                <td th:text="${practice.count}"></td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" title="Edit Practice"
+                                       th:href="@{/practices/update/{id}(id=${practice.id})}">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" data-placement="right" title="Delete Practice"
+                                       data-toggle="modal"
+                                       data-target="#modal-warning"
+                                       th:attr="data-target='#modal-warning'+${practice.id}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    <div th:replace="practices/practice_delete_modal_dialog :: practice-delete-modal-dialog"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div th:unless="${!practices.isEmpty()}">
+                        <div class="display-6">Practices noch nicht vorhanden ...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
