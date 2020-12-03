@@ -9,7 +9,7 @@
 
 <div layout:fragment="content" th:remove="tag">
     <div class="row justify-content-center pt-1">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     Workout-Liste
@@ -23,6 +23,7 @@
                                 <th>Name</th>
                                 <th>Datum</th>
                                 <th style="text-align: center">Check</th>
+                                <th style="text-align: center">Copy</th>
                             </tr>
                             </thead>
                             <tr th:each="workout : ${workouts}">
@@ -34,6 +35,12 @@
                                         <i class="fa fa-check"></i>
                                     </a>
                                 </td>
+                                <td style="text-align: center">
+                                    <a href="#" class="tooltip-test" title="Copy Workout"
+                                       th:href="@{/practices/copyWorkout/{id}(id=${workout.id})}">
+                                        <i class="fa fa-copy"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -42,7 +49,7 @@
 
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <div th:if="${isAddPractice}" th:text="'Practices of ' +
