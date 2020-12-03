@@ -217,4 +217,20 @@ public class PracticeController {
         return modelAndView;
     }
 
+    @GetMapping("/copyWorkout/{id}")
+    public ModelAndView practicesCopy(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        currWorkout = workoutService.readWorkout(id);
+        workoutService.copyWorkout(id);
+
+        practices = currWorkout.getPracticeList();
+        workouts = workoutService.readWorkouts();
+
+        modelAndView.addObject("currWorkout", currWorkout);
+        modelAndView.addObject("workouts", workouts);
+        modelAndView.addObject("practices", practices);
+        modelAndView.setViewName("practices/list");
+        return modelAndView;
+    }
+
+
 }

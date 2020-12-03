@@ -15,4 +15,6 @@ public interface WorkoutService {
 
     Optional<Workout> findByNameAndDatum(String name, LocalDate datum);
     Optional<Workout> findFirstByDatum(LocalDate datum);
+
+    Workout copyWorkout(Long id);
 }
