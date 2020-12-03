@@ -27,9 +27,9 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private PracticeService practiceService;
 
-
     @Override
     public void run(String... args) throws Exception {
+
         List<Exercise> exercises = new ArrayList<>();
         exerciseService.readExercises().iterator().forEachRemaining(exercises::add);
         if (exercises.size() == 0) {
@@ -47,7 +47,6 @@ public class DataLoader implements CommandLineRunner {
         }
 
     }
-
 
     private void initExerciseData() {
         Exercise ex = new Exercise("Bankdrücken", MuscleGroup.Brust);
