@@ -27,12 +27,12 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public List<Workout> readWorkouts() {
-        LocalDate datum = LocalDate.now().minusDays(14);
-        List<Workout> allByDatumBefore = workoutRepository.findAllByDatumBefore(datum);
-        return allByDatumBefore;
-        // return workoutRepository.findAll(new Sort(Sort.Direction.DESC, "datum"));
+//        LocalDate datum = LocalDate.now().minusDays(14);
+//        List<Workout> allByDatumBefore = workoutRepository.findAllByDatumBefore(datum);
+//        return allByDatumBefore;
+         return workoutRepository.findAll(new Sort(Sort.Direction.DESC, "datum"));
     }
-
+g
     @Override
     public Workout readWorkout(Long id) {
         Optional<Workout> result = workoutRepository.findById(id);
