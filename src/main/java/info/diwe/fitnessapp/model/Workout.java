@@ -1,6 +1,7 @@
 package info.diwe.fitnessapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import info.diwe.fitnessapp.model.enums.MuscleGroup;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
