@@ -32,7 +32,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 //        return allByDatumBefore;
          return workoutRepository.findAll(new Sort(Sort.Direction.DESC, "datum"));
     }
-g
+
     @Override
     public Workout readWorkout(Long id) {
         Optional<Workout> result = workoutRepository.findById(id);
