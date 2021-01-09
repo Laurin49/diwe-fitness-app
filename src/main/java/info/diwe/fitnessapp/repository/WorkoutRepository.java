@@ -15,4 +15,5 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
     List<Workout> findAll(Sort sort);
     Optional<Workout> findByNameAndAndDatum(String name, LocalDate datum);
     Optional<Workout> findFirstByDatum(LocalDate datum);
+    List<Workout> findAllByDatumBefore(LocalDate datum);
 }
